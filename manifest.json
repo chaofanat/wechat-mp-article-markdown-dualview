@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "微信公众号文章 Markdown 双视图",
+  "description": "打开微信公众号文章后，自动将正文转换为 Markdown，并以「原文 | Markdown」左右双视图并列展示，支持一键复制、下载 .md 与滚动同步。",
+  "version": "1.0.0",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mp.weixin.qq.com/s*"],
+      "js": ["content/markdown.js", "content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

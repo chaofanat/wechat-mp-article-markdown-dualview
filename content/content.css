@@ -1,0 +1,173 @@
+/**
+ * 微信公众号文章 Markdown 双视图样式
+ * 所有类名以 wxmd- 前缀隔离；对微信页面结构的覆写全部加 !important
+ * （内容脚本样式与页面样式同层级，需保证优先级）
+ */
+
+/* ===== 双视图激活：原文约束到左半屏居中 =====
+   行内 important 样式由 content.js 负责写入；此处为 CSS 兜底，
+   双写 id 提高特异性以对抗微信跨域样式表的 !important 规则 */
+html.wxmd-on #js_article#js_article.rich_media,
+html.wxmd-on #content_bottom_area#content_bottom_area {
+  max-width: 50vw !important;
+  margin-inline: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+/* 右侧悬浮的 PC 二维码会压在面板下，隐藏 */
+html.wxmd-on #js_pc_qr_code {
+  display: none !important;
+}
+
+/* ===== Markdown 面板（右半屏） ===== */
+.wxmd-pane {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-start: 50%;
+  inset-inline-end: 0;
+  z-index: 2147483000;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  background: #fff;
+  box-shadow: -6px 0 24px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+@media (max-width: 899px) {
+  /* 窄屏退化为全屏覆盖层 */
+  .wxmd-pane {
+    inset-inline-start: 0;
+  }
+}
+
+/* --- 头部 --- */
+.wxmd-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex: none;
+  padding: 10px 16px;
+  border-block-end: 1px solid #e1e4e8;
+  background: #f6f8fa;
+}
+
+.wxmd-info {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-inline-size: 0;
+}
+
+.wxmd-label {
+  flex: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #24292f;
+}
+
+.wxmd-meta {
+  font-size: 12px;
+  color: #57606a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wxmd-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.wxmd-btn {
+  appearance: none;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  background: #fff;
+  color: #24292f;
+  font-size: 12px;
+  line-height: 1;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+.wxmd-btn:hover {
+  background: #f3f4f6;
+}
+
+.wxmd-btn.wxmd-primary {
+  background: #1f6feb;
+  border-color: #1f6feb;
+  color: #fff;
+}
+
+.wxmd-btn.wxmd-primary:hover {
+  background: #1a5fd0;
+}
+
+.wxmd-btn.wxmd-icon-only {
+  padding: 7px 9px;
+  color: #57606a;
+}
+
+/* --- 正文区 --- */
+.wxmd-body {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+
+.wxmd-pre {
+  margin: 0;
+  padding: 16px 20px 40px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #24292f;
+  tab-size: 4;
+}
+
+/* --- 提示条 --- */
+.wxmd-toast {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 24px;
+  margin-inline: auto;
+  width: max-content;
+  max-width: 80%;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(36, 41, 47, 0.92);
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* ===== 关闭后重新打开的悬浮按钮 ===== */
+.wxmd-fab {
+  position: fixed;
+  inset-block-end: 24px;
+  inset-inline-end: 20px;
+  z-index: 2147483000;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  background: #24292f;
+  color: #fff;
+  font-size: 13px;
+  font-family: system-ui, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.wxmd-fab:hover {
+  background: #3c434d;
+}
